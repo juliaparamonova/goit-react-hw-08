@@ -34,6 +34,7 @@ const slice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(loginThunk.rejected, () => {
         errorMessage('Invalid email or password');
@@ -42,6 +43,8 @@ const slice = createSlice({
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
+        state.contacts = [];
+        localStorage.removeItem('token');
       })
       .addCase(refreshUserThunk.pending, state => {
         state.isRefreshing = true;

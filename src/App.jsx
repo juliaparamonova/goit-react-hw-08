@@ -21,8 +21,15 @@ const App = () => {
   const LoginPage = lazy(() => import('./pages/LoginPage'));
   const ContactsPage = lazy(() => import('./pages/ContactsPage'));
 
+  // useEffect(() => {
+  //   dispatch(refreshUserThunk());
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(refreshUserThunk());
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(refreshUserThunk(token));
+    }
   }, [dispatch]);
 
   return isRefreshing ? (
